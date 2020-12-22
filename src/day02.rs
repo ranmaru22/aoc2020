@@ -1,6 +1,6 @@
 use std::fs;
 
-pub fn find() -> Result<u64, Box<dyn std::error::Error + 'static>> {
+pub fn find() -> Result<String, Box<dyn std::error::Error + 'static>> {
     let data_str = fs::read_to_string("../assets/input02.txt")?;
     let data = data_str.split('\n');
     let mut result = 0;
@@ -17,10 +17,10 @@ pub fn find() -> Result<u64, Box<dyn std::error::Error + 'static>> {
             _ => {}
         }
     }
-    Ok(result)
+    Ok(result.to_string())
 }
 
-pub fn find2() -> Result<u64, Box<dyn std::error::Error + 'static>> {
+pub fn find2() -> Result<String, Box<dyn std::error::Error + 'static>> {
     let data_str = fs::read_to_string("../assets/input02.txt")?;
     let data = data_str.split('\n');
     let mut result = 0;
@@ -40,5 +40,5 @@ pub fn find2() -> Result<u64, Box<dyn std::error::Error + 'static>> {
             _ => {}
         }
     }
-    Ok(result)
+    Ok(result.to_string())
 }

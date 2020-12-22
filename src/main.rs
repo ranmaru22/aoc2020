@@ -2,19 +2,18 @@ use advent2020::day01;
 use advent2020::day02;
 
 fn main() {
-    if let Ok(ans01) = day01::find() {
-        println!("Day 1, Part 1: {}", ans01);
-    }
+    let args = std::env::args().collect::<Vec<String>>();
+    let day = args.get(1)
+        .map(|s| s.as_str())
+        .unwrap_or("None");
 
-    if let Ok(ans02) = day01::find2() {
-        println!("Day 1, Part 2: {}", ans02);
-    }
+    let result = match day {
+        "day01a" => day01::find().ok().unwrap(),
+        "day01b" => day01::find2().ok().unwrap(),
+        "day02a" => day02::find().ok().unwrap(),
+        "day02b" => day02::find2().ok().unwrap(),
+        _ => "Invalid problem".to_string()
+    };
 
-    if let Ok(ans01) = day02::find() {
-        println!("Day 2, Part 1: {}", ans01);
-    }
-
-    if let Ok(ans02) = day02::find2() {
-        println!("Day 2, Part 2: {}", ans02);
-    }
+    println!("{}", result);
 }
