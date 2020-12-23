@@ -14,6 +14,7 @@ fn main() {
         "day02a" => day02::find().ok().unwrap(),
         "day02b" => day02::find2().ok().unwrap(),
         "day03a" => day03::find().ok().unwrap(),
+        "day03b" => day03::find2().ok().unwrap(),
         _ => "Invalid problem".to_string()
     };
 
