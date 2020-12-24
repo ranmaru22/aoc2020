@@ -39,3 +39,23 @@ pub fn find() -> Result<String, Box<dyn std::error::Error + 'static>> {
 
     Ok(highest_id.to_string())
 }
+
+pub fn find2() -> Result<String, Box<dyn std::error::Error + 'static>> {
+    let seats = read_file()?;
+    let mut taken_seats = Vec::new();
+
+    for seat in seats.iter() {
+        let (rtable, ctable) = (&seat[0..=6], &seat[7..]);
+        let row = bin_split((0..=127).collect(), rtable);
+        let col = bin_split((0..=7).collect(), ctable);
+        let id = row * 8 + col;
+        taken_seats.push(id);
+    }
+
+    taken_seats.sort();
+    let (lowest, highest) = (taken_seats.first().unwrap() - 1, taken_seats.last().unwrap());
+    let sum1 = (highest * (highest + 1)) / 2;
+    let sum2 = taken_seats.iter().fold((lowest * (lowest + 1)) / 2, |acc, val| acc + val);
+
+    Ok((sum1 - sum2).to_string())
+}
