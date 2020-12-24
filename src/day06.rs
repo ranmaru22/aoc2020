@@ -24,3 +24,21 @@ pub fn find() -> Result<String, Box<dyn std::error::Error + 'static>> {
 
     Ok(sum.to_string())
 }
+
+pub fn find2() -> Result<String, Box<dyn std::error::Error + 'static>> {
+    let data = read_file()?;
+    let mut sum = 0;
+
+    for answers in data {
+        let mut sets: Vec<_> = answers.split_whitespace().map(|ln| ln.chars().collect::<HashSet<char>>()).collect();
+        let (intersection, rest) = sets.split_at_mut(1);
+        let intersection = &mut intersection[0];
+
+        for set in rest {
+            intersection.retain(|x| set.contains(x));
+        }
+        sum += intersection.len();
+    }
+
+    Ok(sum.to_string())
+}

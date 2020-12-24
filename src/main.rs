@@ -23,6 +23,7 @@ fn main() {
         "day05a" => day05::find().ok().unwrap(),
         "day05b" => day05::find2().ok().unwrap(),
         "day06a" => day06::find().ok().unwrap(),
+        "day06b" => day06::find2().ok().unwrap(),
         _ => "Invalid problem".to_string()
     };
 
