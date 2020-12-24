@@ -32,7 +32,7 @@ pub fn find2() -> Result<String, Box<dyn std::error::Error + 'static>> {
     for answers in data {
         let mut sets: Vec<_> = answers.split_whitespace().map(|ln| ln.chars().collect::<HashSet<char>>()).collect();
         let (intersection, rest) = sets.split_at_mut(1);
-        let intersection = &mut intersection[0];
+        let ref mut intersection = intersection[0];
 
         for set in rest {
             intersection.retain(|x| set.contains(x));
