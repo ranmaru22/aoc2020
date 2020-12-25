@@ -4,6 +4,7 @@ use advent2020::day03;
 use advent2020::day04;
 use advent2020::day05;
 use advent2020::day06;
+use advent2020::day07;
 
 fn main() {
     let args = std::env::args().collect::<Vec<String>>();
@@ -24,6 +25,7 @@ fn main() {
         "day05b" => day05::find2().ok().unwrap(),
         "day06a" => day06::find().ok().unwrap(),
         "day06b" => day06::find2().ok().unwrap(),
+        "day07a" => day07::find().ok().unwrap(),
         _ => "Invalid problem".to_string()
     };
 
