@@ -37,7 +37,7 @@ fn sum_up_counts(bag: &str, rules: &Vec<String>) -> usize {
         _ => contents.iter()
             .map(|(n, next_bag)| match sum_up_counts(next_bag, rules) {
                 1 => *n,
-                ref x => n + n * x,
+                x => *n + *n * x,
             })
             .fold(0, |acc, val| acc + val)
     }
