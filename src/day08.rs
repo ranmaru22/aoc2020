@@ -51,3 +51,7 @@ pub fn find() -> Result<String, Box<dyn std::error::Error + 'static>> {
     }
     Ok(acc.to_string())
 }
+
+pub fn find2() -> Result<String, Box<dyn std::error::Error + 'static>> {
+    unimplemented!();
+}
