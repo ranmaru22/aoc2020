@@ -32,6 +32,7 @@ fn main() {
         "day08a" => day08::find().ok().unwrap(),
         // "day08b" => day08::find2().ok().unwrap(),
         "day09a" => day09::find().ok().unwrap(),
+        "day09b" => day09::find2().ok().unwrap(),
         _ => "Invalid problem".to_string()
     };
 

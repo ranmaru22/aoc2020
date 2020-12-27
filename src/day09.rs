@@ -29,3 +29,24 @@ pub fn find() -> Result<String, Box<dyn std::error::Error + 'static>> {
     }
     Ok(result.to_string())
 }
+
+pub fn find2() -> Result<String, Box<dyn std::error::Error + 'static>> {
+    let data = read_file()?;
+    let num: usize = find().unwrap().parse().unwrap();
+    let filtered_data = data.iter().filter(|n| *n < &num).collect::<Vec<_>>();
+    let mut result = 0;
+
+    'outer: for i in 0..filtered_data.len() {
+        for j in i..filtered_data.len() {
+            let slice = &data[i..=j];
+            let sum = slice.iter().fold(0, |acc, val| acc + val);
+            if sum == num {
+                result = slice.iter().min().unwrap() + slice.iter().max().unwrap();
+                break 'outer;
+            } else if sum > num {
+                continue 'outer;
+            }
+        }
+    }
+    Ok(result.to_string())
+}
