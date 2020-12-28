@@ -1,17 +1,18 @@
-use std::fs;
 use regex::Regex;
+use std::fs;
 
 fn read_file() -> Result<Vec<String>, Box<dyn std::error::Error + 'static>> {
-    let data_str = fs::read_to_string("../assets/input07.txt")?;
+    let data_str = fs::read_to_string("assets/input07.txt")?;
     Ok(data_str
-       .split('\n')
-       .map(|s| s.to_string())
-       .filter(|s| s.len() > 0)
-       .collect())
+        .split('\n')
+        .map(|s| s.to_string())
+        .filter(|s| s.len() > 0)
+        .collect())
 }
 
 fn collect_matches(bag: &str, rules: &Vec<String>) -> Vec<String> {
-    rules.iter()
+    rules
+        .iter()
         .filter(|r| r.contains(bag))
         .map(|r| r.split_whitespace().take(2).collect::<Vec<_>>().join(" "))
         .filter(|b| b != bag)
@@ -34,12 +35,13 @@ fn sum_up_counts(bag: &str, rules: &Vec<String>) -> usize {
     let contents = collect_matches_with_count(bag, rules);
     match contents.len() {
         0 => 1,
-        _ => contents.iter()
+        _ => contents
+            .iter()
             .map(|(n, next_bag)| match sum_up_counts(next_bag, rules) {
                 1 => *n,
                 x => *n + *n * x,
             })
-            .fold(0, |acc, val| acc + val)
+            .fold(0, |acc, val| acc + val),
     }
 }
 
@@ -50,7 +52,9 @@ pub fn find() -> Result<String, Box<dyn std::error::Error + 'static>> {
     let mut checked: Vec<String> = Vec::new();
 
     while let Some(bag) = to_check.pop() {
-        if checked.contains(&bag) { continue; }
+        if checked.contains(&bag) {
+            continue;
+        }
         let mut batch = collect_matches(&bag, &data);
         to_check.append(&mut batch);
         checked.push(bag);

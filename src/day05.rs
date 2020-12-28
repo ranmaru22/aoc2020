@@ -1,23 +1,25 @@
 use std::fs;
 
 fn read_file() -> Result<Vec<String>, Box<dyn std::error::Error + 'static>> {
-    let data_str = fs::read_to_string("../assets/input05.txt")?;
+    let data_str = fs::read_to_string("assets/input05.txt")?;
     Ok(data_str
-       .split('\n')
-       .map(|s| s.to_string())
-       .filter(|s| s.len() > 0)
-       .collect())
+        .split('\n')
+        .map(|s| s.to_string())
+        .filter(|s| s.len() > 0)
+        .collect())
 }
 
 fn bin_split(range: Vec<u32>, ptable: &str) -> u32 {
     if range.len() == 1 {
-       range[0]
+        range[0]
     } else {
         let pivot = range[range.len() / 2];
         match ptable.chars().nth(0) {
             Some('F') | Some('L') => bin_split((range[0]..pivot).collect(), &ptable[1..]),
-            Some('B') | Some('R') => bin_split((pivot..=*range.last().unwrap()).collect(), &ptable[1..]),
-            _ => 0
+            Some('B') | Some('R') => {
+                bin_split((pivot..=*range.last().unwrap()).collect(), &ptable[1..])
+            }
+            _ => 0,
         }
     }
 }
@@ -53,9 +55,14 @@ pub fn find2() -> Result<String, Box<dyn std::error::Error + 'static>> {
     }
 
     taken_seats.sort();
-    let (lowest, highest) = (taken_seats.first().unwrap() - 1, taken_seats.last().unwrap());
+    let (lowest, highest) = (
+        taken_seats.first().unwrap() - 1,
+        taken_seats.last().unwrap(),
+    );
     let sum1 = (highest * (highest + 1)) / 2;
-    let sum2 = taken_seats.iter().fold((lowest * (lowest + 1)) / 2, |acc, val| acc + val);
+    let sum2 = taken_seats
+        .iter()
+        .fold((lowest * (lowest + 1)) / 2, |acc, val| acc + val);
 
     Ok((sum1 - sum2).to_string())
 }

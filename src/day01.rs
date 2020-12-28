@@ -1,7 +1,7 @@
 use std::fs;
 
 pub fn find() -> Result<String, Box<dyn std::error::Error + 'static>> {
-    let data = fs::read_to_string("../assets/input01.txt")?
+    let data = fs::read_to_string("assets/input01.txt")?
         .split('\n')
         .map(|r| r.parse::<u64>().unwrap_or_default())
         .collect::<Vec<_>>();
@@ -15,7 +15,6 @@ pub fn find() -> Result<String, Box<dyn std::error::Error + 'static>> {
     }
     Ok("None".to_string())
 }
-
 
 pub fn find2() -> Result<String, Box<dyn std::error::Error + 'static>> {
     let data = fs::read_to_string("../assets/input01.txt")?

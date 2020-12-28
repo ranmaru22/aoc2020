@@ -1,20 +1,26 @@
-use std::fs;
 use itertools::Itertools;
+use std::fs;
 
 fn read_file() -> Result<Vec<usize>, Box<dyn std::error::Error + 'static>> {
-    let data_str = fs::read_to_string("../assets/input09.txt")?;
+    let data_str = fs::read_to_string("assets/input09.txt")?;
     Ok(data_str
-       .split('\n')
-       .filter(|s| s.len() > 0)
-       .map(|s| s.parse::<_>().unwrap())
-       .collect())
+        .split('\n')
+        .filter(|s| s.len() > 0)
+        .map(|s| s.parse::<_>().unwrap())
+        .collect())
 }
 
 fn is_valid_sum(range: &[usize]) -> bool {
     if let Some(num) = range.last() {
-        let sums = &range[0..range.len() - 1].iter().combinations(2).map(|s| s[0] + s[1]).collect::<Vec<usize>>();
+        let sums = &range[0..range.len() - 1]
+            .iter()
+            .combinations(2)
+            .map(|s| s[0] + s[1])
+            .collect::<Vec<usize>>();
         sums.contains(&num)
-    } else { false }
+    } else {
+        false
+    }
 }
 
 pub fn find() -> Result<String, Box<dyn std::error::Error + 'static>> {
