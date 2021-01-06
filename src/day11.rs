@@ -45,14 +45,6 @@ struct SeatGrid {
 }
 
 impl SeatGrid {
-    pub fn new(grid: Vec<Vec<Seat>>) -> Self {
-        let occupied = grid.iter().flatten().fold(0, |acc, val| if *val == Seat::Chair(true) { acc + 1 } else { acc });
-        Self {
-            grid,
-            occupied,
-        }
-    }
-
     pub fn from_str(s: &str) -> Self {
     let grid = s
         .split('\n')
