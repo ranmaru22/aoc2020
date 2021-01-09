@@ -100,6 +100,7 @@ impl std::ops::AddAssign<isize> for Direction {
     }
 }
 
+#[derive(Debug)]
 struct Instruction {
     dir: char,
     steps: isize,
@@ -129,6 +130,14 @@ impl Ship {
         }
     }
 
+    pub fn new_empty() -> Self {
+        Self {
+            pos: (0, 0),
+            dir: Direction::E,
+            stack: Vec::new(),
+        }
+    }
+
     pub fn get_instruction_with_abs_dir(&self, i: Instruction) -> Instruction {
         match i.dir {
             'F' => Instruction { dir: self.dir.as_char(), steps: i.steps },
@@ -150,6 +159,11 @@ impl Ship {
         }
     }
 
+    pub fn move_towards_wp(&mut self, steps: (isize, isize), i: isize) {
+        self.pos.0 += i * steps.0;
+        self.pos.1 += i * steps.1;
+    }
+
     pub fn process_stack(&mut self) {
         while let Some(next) = self.stack.pop() {
             self.move_ship(next);
@@ -158,6 +172,52 @@ impl Ship {
 
     pub fn manhattan(&self) -> isize {
         self.pos.0.abs() + self.pos.1.abs()
+    }
+}
+
+struct Waypoint {
+    pos: (isize, isize),
+    ship: Ship,
+    stack: Vec<Instruction>
+}
+
+impl Waypoint {
+    pub fn new(stack: Vec<Instruction>) -> Self {
+        Self {
+            pos: (1, 10),
+            ship: Ship::new_empty(),
+            stack,
+        }
+    }
+
+    pub fn rotate(&mut self, dir: char, deg: isize) {
+        for _ in 0..(deg/90) {
+            let mut new_pos = (self.pos.1, self.pos.0);
+            match dir {
+                'R' => new_pos.0 *= -1,
+                'L' => new_pos.1 *= -1,
+                x => panic!("Invalid instruction: {}", x),
+            }
+            self.pos = new_pos;
+        }
+    }
+
+    pub fn move_wp(&mut self, i: Instruction) {
+        match i.dir {
+            'N' => self.pos.0 += i.steps,
+            'S' => self.pos.0 -= i.steps,
+            'E' => self.pos.1 += i.steps,
+            'W' => self.pos.1 -= i.steps,
+            'R' | 'L' => self.rotate(i.dir, i.steps),
+            'F' => self.ship.move_towards_wp(self.pos, i.steps),
+            x => panic!("Invalid instruction: {}", x),
+        }
+    }
+
+    pub fn process_stack(&mut self) {
+        while let Some(next) = self.stack.pop() {
+            self.move_wp(next);
+        }
     }
 }
 
@@ -178,4 +238,13 @@ pub fn find() -> Result<String, Box<dyn std::error::Error + 'static>> {
     ship.process_stack();
 
     Ok(ship.manhattan().to_string())
+}
+
+pub fn find2() -> Result<String, Box<dyn std::error::Error + 'static>> {
+    let data = read_file()?;
+    let mut wp = Waypoint::new(data);
+
+    wp.process_stack();
+
+    Ok(wp.ship.manhattan().to_string())
 }

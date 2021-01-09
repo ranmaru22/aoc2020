@@ -24,8 +24,9 @@ fn main() {
         "day10a" => advent2020::day10::find().ok().unwrap(),
         "day10b" => advent2020::day10::find2().ok().unwrap(),
         "day11a" => advent2020::day11::find().ok().unwrap(),
-        "day11b"  => advent2020::day11::find2().ok().unwrap(),
-        "day12a" | _ => advent2020::day12::find().ok().unwrap(),
+        "day11b" => advent2020::day11::find2().ok().unwrap(),
+        "day12a" => advent2020::day12::find().ok().unwrap(),
+        _ => advent2020::day12::find2().ok().unwrap(),
     };
 
     println!("{}", result);
