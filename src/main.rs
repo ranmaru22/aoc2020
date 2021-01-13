@@ -27,7 +27,9 @@ fn main() {
         "day11b" => advent2020::day11::find2().ok().unwrap(),
         "day12a" => advent2020::day12::find().ok().unwrap(),
         "day12b" => advent2020::day12::find2().ok().unwrap(),
-        _ => advent2020::day13::find().ok().unwrap(),
+        "day13a" => advent2020::day13::find().ok().unwrap(),
+        "day13b" => advent2020::day13::find2().ok().unwrap(),
+        _ => String::from("Invalid problem!"),
     };
 
     println!("{}", result);
